@@ -19,9 +19,9 @@ Online store API
 `Server=192.168.50.50,1433;Database=ISI_API;User Id=grupo11;Password=grupo11;`
 
 <br>
-<br>
 
-*Or by doing the following on SQL Server Managment Studio:*
+>*Or by doing the following on SQL Server Managment Studio:*
+
 <br>
 
 **Connect To Server > Authentication:** "SQL Server Authentication" **> Login:** "grupo11" **> Password:** "grupo11" **> Connect**
