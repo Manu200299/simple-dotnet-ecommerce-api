@@ -1,2 +1,5 @@
 # ISI-Grupo11-API
-ISI-2024 TP2 | API
+
+## Project Summary
+
+> Online store API
