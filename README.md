@@ -8,7 +8,7 @@
 
 ## Project Summary
 
-Online store API
+Online store API with login, orders, simulated payments, carts, cart sharing (Amazon twitch wishlist streams). To be implemented with Kotlin Jetpack Compose.
 <br>
 
 ---
@@ -36,3 +36,4 @@ Online store API
 - Products 
 - Users
 - Carts
+- ...
