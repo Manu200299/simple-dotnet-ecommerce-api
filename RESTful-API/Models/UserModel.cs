@@ -1,6 +1,6 @@
 ﻿namespace RESTful_API.Models
 {
-    public class User
+    public class UserModel
     {
         public int UserID { get; set; }
         public string Username { get; set; }

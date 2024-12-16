@@ -19,24 +19,30 @@ namespace RESTful_API.Controllers
             _configuration = configuration;
         }
 
+        string api = "ISIWebAPI";
+
+        /// <summary>
+        /// GET Request (All Users)
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Get[controller]")]
         public string GetUsers()
         {
-            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("ISIWebAPI").ToString());
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(api).ToString());
             SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT * FROM Users", connection);
             DataTable dataTable = new DataTable();
             dataAdapter.Fill(dataTable);
 
-            List<User> usersList = new List<User>();
-            Response response = new Response();
+            List<UserModel> usersList = new List<UserModel>();
+            ResponseModel response = new ResponseModel();
 
 
             if (dataTable.Rows.Count > 0)
             {
                 for (int i = 0; i < dataTable.Rows.Count; i++)
                 {
-                    User user = new User();
+                    UserModel user = new UserModel();
                     user.UserID = Convert.ToInt32(dataTable.Rows[i]["UserID"]); 
                     user.Username = Convert.ToString(dataTable.Rows[i]["Username"]); 
                     user.Email = Convert.ToString(dataTable.Rows[i]["Email"]); 
@@ -57,6 +63,17 @@ namespace RESTful_API.Controllers
                 response.ErrorMessage = "No data found";
                 return  JsonConvert.SerializeObject(response);
             }
+        }
+
+        /// <summary>
+        /// POST Request (Add User)
+        /// </summary>
+        [HttpPost]
+        [Route("api/Post[controller]")]
+        public string PostUser(UserModel user)
+        {
+            SqlConnection connection = new SqlConnection(_configuration.GetConnectionString(api).ToString());
+            SqlDataAdapter dataAdapter = new SqlDataAdapter("INSERT INTO Users(Username, Email, PasswordHash, Salt, Token, CreatedAt, UpdatedAt) VALUES("+user.Username")", connection);
         }
     }
 }
