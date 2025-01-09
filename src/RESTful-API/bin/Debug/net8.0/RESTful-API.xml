@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RESTful-API</name>
+    </assembly>
+    <members>
+        <member name="T:RESTful_API.Controllers.AddressController">
+            <summary>
+            AddressController API
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.AddressController.GetAllAdresses">
+            <summary>
+            GET Request to fetch all Addresses on the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.AddressController.GetAddressById(System.Int32)">
+            <summary>
+            GET Request to fetch a specific address by id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.AddressController.CreateAddress(System.Int32,RESTful_API.Models.AddressModel)">
+            <summary>
+            POST Request to post an address to an user
+            </summary>
+            <param name="userId"></param>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.AddressController.DeleteAddress(System.Int32,System.Int32)">
+            <summary>
+            DELETE Request to delete an address
+            </summary>
+            <param name="userId"></param>
+            <param name="addressId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.AddressController.UpdateAddress(System.Int32,System.Int32,RESTful_API.Models.AddressModel)">
+            <summary>
+            PUT Request to update an address
+            </summary>
+            <param name="userId"></param>
+            <param name="addressId"></param>
+            <param name="updatedAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CartController.GetCart(System.Int32)">
+            <summary>
+            GET Request to get the user's current cart
+            </summary>
+            <param name="userId">The ID of the user</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CartController.AddToCart(RESTful_API.Models.AddToCartRequest)">
+            <summary>
+            POST Request to add a product to the user's cart
+            </summary>
+            <param name="request">Cart item details</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CartController.AddSharedCart(System.Int32,System.String)">
+            <summary>
+            PUT Request to generate and add a shared token to a specific cart
+            </summary>
+            <param name="cartId">The ID of the cart to update</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CartController.AddSharedCart(System.Collections.Generic.List{RESTful_API.Models.CartModel})">
+            <summary>
+            POST Request to add a shared cart
+            </summary>
+            <param name="cartItems">List of cart items to add</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CartController.RemoveFromCart(System.Int32)">
+            <summary>
+            DELETE Request to remove a product from the user's cart
+            </summary>
+            <param name="cartId">The CartID of the item to remove</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CategoryController.GetCategories">
+            <summary>
+            GET all categories
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CategoryController.GetCategory(System.Int32)">
+            <summary>
+            GET a specific category by CategoryID
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CategoryController.CreateCategory(RESTful_API.Models.CategoryModel)">
+            <summary>
+            POST a new category
+            </summary>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CategoryController.UpdateCategory(System.Int32,RESTful_API.Models.CategoryModel)">
+            <summary>
+            PUT (Update) a category
+            </summary>
+            <param name="categoryId"></param>
+            <param name="category"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.CategoryController.DeleteCategory(System.Int32)">
+            <summary>
+            DELETE a category by CategoryID
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.LoginController.Login(RESTful_API.Models.LoginModel)">
+            <summary>
+            POST login request that verifies if the credentials are valid and generates a token for that user
+            </summary>
+            <param name="login"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.OrderController.GetOrdersByUser(System.Int32)">
+            <summary>
+            GET Request to fetch all orders for a specific User
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.OrderController.GetOrder(System.Int32)">
+            <summary>
+            GET Request for a specific Order
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.OrderController.CreateOrder(RESTful_API.Models.CreateOrderRequest)">
+            <summary>
+            POST Request that creates a whole order
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.OrderController.DeleteOrder(System.Int32)">
+            <summary>
+            Delete order
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentController.GetPayment(System.Int32)">
+            <summary>
+            GET Request to get payment details by PaymentID
+            </summary>
+            <param name="paymentId">The ID of the payment</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentController.CreatePayment(PaymentRequest)">
+            <summary>
+            POST Request to create a payment
+            </summary>
+            <param name="request">Payment details</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentController.UpdatePaymentStatus(System.Int32,System.Int32)">
+            <summary>
+            PUT Request to update payment status
+            </summary>
+            <param name="paymentId">The ID of the payment</param>
+            <param name="paymentStatusId">The new status ID for the payment</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentController.DeletePayment(System.Int32)">
+            <summary>
+            DELETE Request to delete a payment
+            </summary>
+            <param name="paymentId">The ID of the payment</param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentStripeController.CreatePaymentIntentComplete(RESTful_API.Models.CreatePaymentIntentRequest)">
+            <summary>
+            POST Request to create a payment intent with Stripe
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentStripeController.ConfirmPaymentIntent(RESTful_API.Models.ConfirmPaymentIntentRequest)">
+            <summary>
+            POST Request that confirms payment intent
+            </summary>
+            <param name="paymentIntentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.PaymentStripeController.StripeWebhook">
+            <summary>
+            POST request for Stripe Webhook
+            </summary>
+        </member>
+        <member name="T:RESTful_API.Controllers.ProductController">
+            <summary>
+            ProductController API
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.ProductController.GetAllProducts">
+            <summary>
+            GET Request to fetch all products
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.ProductController.GetProductById(System.Int32)">
+            <summary>
+            GET Request to fetch a product by ID
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.ProductController.CreateProduct(RESTful_API.Models.ProductsModel)">
+            <summary>
+            POST Request to create a new product
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.ProductController.UpdateProduct(System.Int32,RESTful_API.Models.ProductsModel)">
+            <summary>
+            PUT Request to update a product
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.ProductController.DeleteProduct(System.Int32)">
+            <summary>
+            DELETE Request to delete a product
+            </summary>
+        </member>
+        <member name="T:RESTful_API.Controllers.UserController">
+            <summary>
+            UserController API
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.UserController.GetAllUsers">
+            <summary>
+            GET Request to fetch all Users
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.UserController.GetUserById(System.Int32)">
+            <summary>
+            GET Request for user by its specific ID
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.UserController.AddUser(RESTful_API.Models.UserModel)">
+            <summary>
+            POST Request to post a new user
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.UserController.DeleteUser(System.Int32)">
+            <summary>
+            DELETE Request to delete certain user by id from the database
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.UserController.UpdateUser(System.Int32,RESTful_API.Models.UserModel)">
+            <summary>
+            PUT request to update an existing user
+            </summary>
+            <param name="userId"></param>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="T:RESTful_API.Service.JwtService">
+            <summary>
+            JWT Token Service
+            </summary>
+        </member>
+        <member name="M:RESTful_API.Service.JwtService.GenerateToken(RESTful_API.Models.UserModel)">
+            <summary>
+            Generates the JWT token 
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:RESTful_API.Service.UserService.ValidateUser(System.String,System.String)">
+            <summary>
+            Validates the user credentials
+            </summary>
+            <param name="username"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

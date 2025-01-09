@@ -1,4 +1,4 @@
-d-- ISI API Online Store --
+-- ISI API Online Store --
 /*
  Project Summary
  PT
@@ -13,24 +13,23 @@ d-- ISI API Online Store --
 
 	Q: On a two table relationship, where should the foreign key go?
 	A: On the "Many" end table. Ex.: Column A has many B. Therefore column B has A as foreign key
-
+	
 */
-
 -- Users Table
 CREATE TABLE Users(
-	UserID INT PRIMARY KEY NOT NULL,
+	UserID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	Username NVARCHAR(100) NOT NULL,
 	Email NVARCHAR(150) NOT NULL,
 	PasswordHash NVARCHAR(255) NOT NULL, -- Hashed password
 	Salt NVARCHAR(255) NOT NULL, -- Additional security for password hashing
 	Token NVARCHAR(MAX), -- Optional JWT auth token
-	CreatedAt DATETIME DEFAULT GETDATE(),
+	CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 	UpdatedAt DATETIME DEFAULT GETDATE()
 );
 
 -- Address Table
 CREATE TABLE "Address"(
-	AddressID INT PRIMARY KEY NOT NULL,
+	AddressID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	FirstName NVARCHAR(50) NOT NULL,
 	LastName NVARCHAR(50) NOT NULL,
 	PhoneNumber NVARCHAR(30) NOT NULL, -- Maybe needs normalization due to prefix
@@ -45,73 +44,43 @@ CREATE TABLE "Address"(
 
 -- UsersAddress (bridge) Table
 CREATE TABLE UsersAddress(
-	UsersAddressID INT PRIMARY KEY NOT NULL,
+	UsersAddressID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	UserID INT NOT NULL,
 	AddressID INT NOT NULL,
-	FOREIGN KEY (UserID) REFERENCES Users(UserID),
-	FOREIGN KEY (AddressID) REFERENCES "Address"(AddressID),
-);
-
--- Category Table
-CREATE TABLE Category(
-	CategoryID INT PRIMARY KEY NOT NULL,
-	Category NVARCHAR(100) NOT NULL,
-	"Description" NVARCHAR(255)
-);
-
--- ProductDetails Table
-CREATE TABLE ProductDetails(
-	ProductDetailID INT PRIMARY KEY NOT NULL,
-	CategoryID INT NOT NULL,
-	"Name" NVARCHAR(100),
-	"Description" NVARCHAR(255),
-	Color NVARCHAR(100),
-	FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID),
-	
+	FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+	FOREIGN KEY (AddressID) REFERENCES "Address"(AddressID) ON DELETE CASCADE,
 );
 
 -- Products Table
 CREATE TABLE Products(
-	ProductID INT PRIMARY KEY NOT NULL,
-	ProductDetailID INT NOT NULL,
-	CreatedAt DATETIME DEFAULT GETDATE(),
+	ProductID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+	CategoryID INT NOT NULL,
+	"Name" NVARCHAR(100),
+	"Description" NVARCHAR(255),
+	Color NVARCHAR(100),
+	Category NVARCHAR(100) NOT NULL,
+	Price DECIMAL(18, 2) NOT NULL,
+	Stock INT NOT NULL,
+	CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 	UpdatedAt DATETIME DEFAULT GETDATE(),
-	FOREIGN KEY (ProductDetailID) REFERENCES ProductDetails(ProductDetailID),
-);
-
--- Stock Table 
-CREATE TABLE Stock(
-	StockID INT PRIMARY KEY NOT NULL,
-	ProductID INT NOT NULL,
-	Quantity INT DEFAULT 0,
-	FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
 );
 
 -- Orders Table
 CREATE TABLE Orders(
-	OrderID INT PRIMARY KEY NOT NULL,
+	OrderID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	UserID INT NOT NULL, -- Check also for address relationship (bridge table)
+	ProductID INT NOT NULL,
 	Total DECIMAL (18, 2) NOT NULL,
 	OrderDate DATETIME DEFAULT GETDATE(),
 	"Status" NVARCHAR(50) NOT NULL, -- can be changed to int (Add text status values for each number) / new table due to normalization
-	FOREIGN KEY (UserID) REFERENCES Users(UserID)
-	
-);
-
--- OrderDetails Table (For each order line item)
-CREATE TABLE OrderDetails(
-	OrderDetailID INT PRIMARY KEY NOT NULL,
-	OrderID INT NOT NULL,
-	ProductID INT NOT NULL,
-	Quantity INT NOT NULL,
-	Price DECIMAL(18, 2) NOT NULL,
-	FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+	FOREIGN KEY (UserID) REFERENCES Users(UserID),
 	FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+	
 );
 
 -- Carts Table
 CREATE TABLE Carts(
-	CartID INT PRIMARY KEY NOT NULL,
+	CartID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	UserID INT NOT NULL,
 	ProductID INT NOT NULL,
 	Quantity INT NOT NULL,
@@ -124,7 +93,7 @@ CREATE TABLE Carts(
 
 -- Payments Table
 CREATE TABLE Payments(
-	PaymentID INT PRIMARY KEY NOT NULL,
+	PaymentID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 	OrderID INT NOT NULL,
 	PaymentDate DATETIME DEFAULT GETDATE(),
 	Amount DECIMAL(18, 2) NOT NULL,
@@ -135,10 +104,10 @@ CREATE TABLE Payments(
 
 ---- SharedCarts Table
 --CREATE TABLE SharedCarts(
---	SharedCartID INT PRIMARY KEY NOT NULL,
+--	SharedCartID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
 --	UserID INT NOT NULL,
 --	"Name" NVARCHAR NOT NULL, -- SharedCart name 
 --	Token NVARCHAR(MAX), -- Token to access the shared SharedCart
---	CreatedAt DATETIME DEFAULT GETDATE(),
+--	CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
 --	FOREIGN KEY (UserID) REFERENCES Users(UserID)
 --);
