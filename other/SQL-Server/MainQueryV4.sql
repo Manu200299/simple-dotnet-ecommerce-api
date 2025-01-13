@@ -90,11 +90,22 @@ CREATE TABLE Carts(
     ProductID INT NOT NULL,
     Quantity INT NOT NULL,
 	-- ProductPrice decimal(18, 2) NOT NULL,
-	IsShared BIT DEFAULT 0, -- 0 = private, 1 = shareable
-    SharedToken NVARCHAR(MAX), -- Sharing token
+	-- IsShared BIT DEFAULT 0, -- 0 = private, 1 = shareable
+    -- SharedToken NVARCHAR(MAX), -- Sharing token
     AddedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (UserID) REFERENCES Users(UserID),
     FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+-- Shared Carts table
+CREATE TABLE Shared_Carts (
+    SharedCartID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    OwnerUserID INT NOT NULL,
+    ShareCode CHAR(5) NOT NULL,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    ExpiresAt DATETIME,
+    FOREIGN KEY (OwnerUserID) REFERENCES Users(UserID),
+    CONSTRAINT UQ_ShareCode UNIQUE (ShareCode)
 );
 
 -- PaymentMethods Table (Normalized Payment Methods)

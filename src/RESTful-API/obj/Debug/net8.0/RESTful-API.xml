@@ -60,20 +60,6 @@
             <param name="request">Cart item details</param>
             <returns></returns>
         </member>
-        <member name="M:RESTful_API.Controllers.CartController.AddSharedCart(System.Int32,System.String)">
-            <summary>
-            PUT Request to generate and add a shared token to a specific cart
-            </summary>
-            <param name="cartId">The ID of the cart to update</param>
-            <returns></returns>
-        </member>
-        <member name="M:RESTful_API.Controllers.CartController.AddSharedCart(System.Collections.Generic.List{RESTful_API.Models.CartModel})">
-            <summary>
-            POST Request to add a shared cart
-            </summary>
-            <param name="cartItems">List of cart items to add</param>
-            <returns></returns>
-        </member>
         <member name="M:RESTful_API.Controllers.CartController.RemoveFromCart(System.Int32)">
             <summary>
             DELETE Request to remove a product from the user's cart
@@ -228,6 +214,27 @@
             <summary>
             DELETE Request to delete a product
             </summary>
+        </member>
+        <member name="M:RESTful_API.Controllers.SharedCartController.ShareCart(System.Int32)">
+            <summary>
+            POST Request to generate and share a cart
+            </summary>
+            <param name="userId">The ID of the user sharing their cart</param>
+            <returns>A 5-digit share code</returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.SharedCartController.GetSharedCart(System.String)">
+            <summary>
+            GET Request to retrieve a shared cart
+            </summary>
+            <param name="shareCode">The 5-digit share code</param>
+            <returns>The shared cart items</returns>
+        </member>
+        <member name="M:RESTful_API.Controllers.SharedCartController.AddSharedCart(RESTful_API.Controllers.SharedCartController.AddSharedCartRequest)">
+            <summary>
+            POST Request to add a shared cart to the user's cart
+            </summary>
+            <param name="request">AddSharedCartRequest object containing UserID and ShareCode</param>
+            <returns></returns>
         </member>
         <member name="T:RESTful_API.Controllers.UserController">
             <summary>

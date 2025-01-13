@@ -37,7 +37,7 @@ namespace RESTful_API.Controllers
                     connection.Open();
 
                     // Get the user's cart items
-                    var query = @"SELECT c.CartID, c.UserID, c.ProductID, c.Quantity, c.IsShared, p.Name AS ProductName, p.Price AS ProductPrice, c.SharedToken
+                    var query = @"SELECT c.CartID, c.UserID, c.ProductID, c.Quantity, p.Name AS ProductName, p.Price AS ProductPrice
                                   FROM Carts c
                                   JOIN Products p ON c.ProductID = p.ProductID
                                   WHERE c.UserID = @UserID";
@@ -56,10 +56,10 @@ namespace RESTful_API.Controllers
                                     UserID = reader.GetInt32(1),
                                     ProductID = reader.GetInt32(2),
                                     Quantity = reader.GetInt32(3),
-                                    IsShared = reader.GetBoolean(4),  // Handle 'bit' as boolean
-                                    ProductName = reader.GetString(5),
-                                    ProductPrice = reader.GetDecimal(6),
-                                    SharedToken = reader.GetString(7),
+                                    //IsShared = reader.GetBoolean(4),  // Handle 'bit' as boolean
+                                    ProductName = reader.GetString(4),
+                                    ProductPrice = reader.GetDecimal(5),
+                                    //SharedToken = reader.GetString(7),
                                 });
                             }
                         }
@@ -123,16 +123,16 @@ namespace RESTful_API.Controllers
                         else
                         {
                             // Insert new product into the cart
-                            var insertQuery = @"INSERT INTO Carts (UserID, ProductID, Quantity, IsShared, SharedToken)
-                                                VALUES (@UserID, @ProductID, @Quantity, @IsShared, @SharedToken)";
+                            var insertQuery = @"INSERT INTO Carts (UserID, ProductID, Quantity)
+                                                VALUES (@UserID, @ProductID, @Quantity)";
 
                             using (var insertCommand = new SqlCommand(insertQuery, connection))
                             {
                                 insertCommand.Parameters.AddWithValue("@UserID", request.UserID);
                                 insertCommand.Parameters.AddWithValue("@ProductID", request.ProductID);
                                 insertCommand.Parameters.AddWithValue("@Quantity", request.Quantity);
-                                insertCommand.Parameters.AddWithValue("@IsShared", request.IsShared);  // Pass bool to SQL Server's 'bit'
-                                insertCommand.Parameters.AddWithValue("@SharedToken", "notShared");
+                                //insertCommand.Parameters.AddWithValue("@IsShared", request.IsShared);  // Pass bool to SQL Server's 'bit'
+                                //insertCommand.Parameters.AddWithValue("@SharedToken", "notShared");
                                 insertCommand.ExecuteNonQuery();
                             }
                         }
@@ -153,88 +153,88 @@ namespace RESTful_API.Controllers
         /// </summary>
         /// <param name="cartId">The ID of the cart to update</param>
         /// <returns></returns>
-        [HttpPut]
-        [Route("addSharedCart/{cartId}")]
-        public IActionResult AddSharedCart(int cartId, string sharedToken)
-        {
-            try
-            {
-                using (var connection = new SqlConnection(_configuration.GetConnectionString(api)))
-                {
-                    connection.Open();
+        //[HttpPut]
+        //[Route("addSharedCart/{cartId}")]
+        //public IActionResult AddSharedCart(int cartId, string sharedToken)
+        //{
+        //    try
+        //    {
+        //        using (var connection = new SqlConnection(_configuration.GetConnectionString(api)))
+        //        {
+        //            connection.Open();
 
-                    // Update the SharedToken for the specific CartID
-                    var query = @"UPDATE Carts 
-                          SET SharedToken = @SharedToken 
-                          WHERE CartID = @CartID";
+        //            // Update the SharedToken for the specific CartID
+        //            var query = @"UPDATE Carts 
+        //                  SET SharedToken = @SharedToken 
+        //                  WHERE CartID = @CartID";
 
-                    using (var command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@SharedToken", sharedToken);
-                        command.Parameters.AddWithValue("@CartID", cartId);
+        //            using (var command = new SqlCommand(query, connection))
+        //            {
+        //                command.Parameters.AddWithValue("@SharedToken", sharedToken);
+        //                command.Parameters.AddWithValue("@CartID", cartId);
 
-                        var rowsAffected = command.ExecuteNonQuery();
+        //                var rowsAffected = command.ExecuteNonQuery();
 
-                        if (rowsAffected == 0)
-                        {
-                            return NotFound(new { Message = "Cart not found with the specified ID." });
-                        }
-                    }
+        //                if (rowsAffected == 0)
+        //                {
+        //                    return NotFound(new { Message = "Cart not found with the specified ID." });
+        //                }
+        //            }
 
-                    return Ok(new { Message = "Shared token added to cart successfully", cartId = cartId, SharedToken = sharedToken });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
-            }
-        }
+        //            return Ok(new { Message = "Shared token added to cart successfully", cartId = cartId, SharedToken = sharedToken });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
+        //    }
+        //}
 
         /// <summary>
         /// POST Request to add a shared cart
         /// </summary>
         /// <param name="cartItems">List of cart items to add</param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("addSharedCart")]
-        public IActionResult AddSharedCart([FromBody] List<CartModel> cartItems)
-        {
-            try
-            {
-                if (cartItems == null || cartItems.Count == 0)
-                {
-                    return BadRequest(new { Message = "Cart items cannot be empty." });
-                }
+        //[HttpPost]
+        //[Route("addSharedCart")]
+        //public IActionResult AddSharedCart([FromBody] List<CartModel> cartItems)
+        //{
+        //    try
+        //    {
+        //        if (cartItems == null || cartItems.Count == 0)
+        //        {
+        //            return BadRequest(new { Message = "Cart items cannot be empty." });
+        //        }
 
-                using (var connection = new SqlConnection(_configuration.GetConnectionString(api)))
-                {
-                    connection.Open();
+        //        using (var connection = new SqlConnection(_configuration.GetConnectionString(api)))
+        //        {
+        //            connection.Open();
 
-                    foreach (var item in cartItems)
-                    {
-                        var query = @"INSERT INTO Carts (UserID, ProductID, Quantity, IsShared, SharedToken)
-                              VALUES (@UserID, @ProductID, @Quantity, @IsShared, @SharedToken)";
+        //            foreach (var item in cartItems)
+        //            {
+        //                var query = @"INSERT INTO Carts (UserID, ProductID, Quantity)
+        //                      VALUES (@UserID, @ProductID, @Quantity)";
 
-                        using (var command = new SqlCommand(query, connection))
-                        {
-                            command.Parameters.AddWithValue("@UserID", item.UserID);
-                            command.Parameters.AddWithValue("@ProductID", item.ProductID);
-                            command.Parameters.AddWithValue("@Quantity", item.Quantity);
-                            command.Parameters.AddWithValue("@IsShared", true); // Set IsShared to true by default
-                            command.Parameters.AddWithValue("@SharedToken", item.SharedToken);
+        //                using (var command = new SqlCommand(query, connection))
+        //                {
+        //                    command.Parameters.AddWithValue("@UserID", item.UserID);
+        //                    command.Parameters.AddWithValue("@ProductID", item.ProductID);
+        //                    command.Parameters.AddWithValue("@Quantity", item.Quantity);
+        //                    //command.Parameters.AddWithValue("@IsShared", true); // Set IsShared to true by default
+        //                    //command.Parameters.AddWithValue("@SharedToken", item.SharedToken);
 
-                            command.ExecuteNonQuery();
-                        }
-                    }
+        //                    command.ExecuteNonQuery();
+        //                }
+        //            }
 
-                    return Ok(new { Message = "Shared cart added successfully",  });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
-            }
-        }
+        //            return Ok(new { Message = "Shared cart added successfully",  });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new { Message = "An error occurred", Error = ex.Message });
+        //    }
+        //}
 
 
 
