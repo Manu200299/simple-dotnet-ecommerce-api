@@ -241,31 +241,6 @@
         }
       }
     },
-    "/api/Cart/addSharedCart/{cartId}": {
-      "put": {
-        "tags": [
-          "Cart"
-        ],
-        "summary": "PUT Request to generate and add a shared token to a specific cart",
-        "parameters": [
-          {
-            "name": "cartId",
-            "in": "path",
-            "description": "The ID of the cart to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Cart/removeFromCart/{cartId}": {
       "delete": {
         "tags": [
@@ -948,6 +923,88 @@
         }
       }
     },
+    "/api/SharedCart/shareCart/{userId}": {
+      "post": {
+        "tags": [
+          "SharedCart"
+        ],
+        "summary": "POST Request to generate and share a cart",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "The ID of the user sharing their cart",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SharedCart/getSharedCart/{shareCode}": {
+      "get": {
+        "tags": [
+          "SharedCart"
+        ],
+        "summary": "GET Request to retrieve a shared cart",
+        "parameters": [
+          {
+            "name": "shareCode",
+            "in": "path",
+            "description": "The 5-digit share code",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/SharedCart/addSharedCart": {
+      "post": {
+        "tags": [
+          "SharedCart"
+        ],
+        "summary": "POST Request to add a shared cart to the user's cart",
+        "requestBody": {
+          "description": "AddSharedCartRequest object containing UserID and ShareCode",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSharedCartRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSharedCartRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSharedCartRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/User/getAllUser": {
       "get": {
         "tags": [
@@ -1091,6 +1148,20 @@
   },
   "components": {
     "schemas": {
+      "AddSharedCartRequest": {
+        "type": "object",
+        "properties": {
+          "userID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "shareCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "AddToCartRequest": {
         "type": "object",
         "properties": {

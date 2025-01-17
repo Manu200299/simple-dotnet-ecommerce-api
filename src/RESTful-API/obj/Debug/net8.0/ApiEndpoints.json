@@ -95,22 +95,6 @@
   },
   {
     "ContainingType": "RESTful_API.Controllers.CartController",
-    "Method": "AddSharedCart",
-    "RelativePath": "api/Cart/addSharedCart/{cartId}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "cartId",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "RESTful_API.Controllers.CartController",
     "Method": "AddToCart",
     "RelativePath": "api/Cart/addToCart",
     "HttpMethod": "POST",
@@ -517,6 +501,54 @@
       {
         "Name": "updatedProduct",
         "Type": "RESTful_API.Models.ProductsModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RESTful_API.Controllers.SharedCartController",
+    "Method": "AddSharedCart",
+    "RelativePath": "api/SharedCart/addSharedCart",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "RESTful_API.Controllers.SharedCartController\u002BAddSharedCartRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RESTful_API.Controllers.SharedCartController",
+    "Method": "GetSharedCart",
+    "RelativePath": "api/SharedCart/getSharedCart/{shareCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "shareCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "RESTful_API.Controllers.SharedCartController",
+    "Method": "ShareCart",
+    "RelativePath": "api/SharedCart/shareCart/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
